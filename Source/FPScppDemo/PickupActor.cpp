@@ -1,4 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+#include "FPScppDemoCharacter.h"
 #include "PickupActor.h"
 #include "Components\StaticMeshComponent.h"
 #include "Engine.h"
@@ -27,7 +28,13 @@ APickupActor::APickupActor()
 void APickupActor::OnInteract()
 {
 	FString pickup = FString::Printf(TEXT("Picked up: %s"), *Name);
-	GEngine->AddOnScreenDebugMessage(1, 5, FColor::White, pickup);
+	GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, pickup);
+	AFPScppDemoCharacter* player = Cast<AFPScppDemoCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+	if (player)
+	{
+		Show(false);
+		player->AddToInventory(this);
+	}
 }
 
 // Overlap handler
@@ -37,7 +44,7 @@ void APickupActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
 		OnInteract();
-		Destroy();
+		//Destroy();
 	}
 }
 
@@ -46,6 +53,15 @@ void APickupActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void APickupActor::Show(bool visible)
+{
+	ECollisionEnabled::Type collision = visible ? ECollisionEnabled::QueryAndPhysics : ECollisionEnabled::NoCollision;
+	this->SetActorTickEnabled(visible);
+	this->ItemMesh->SetVisibility(visible);
+	this->ItemMesh->SetCollisionEnabled(collision);
+	this->BoxCollider->SetCollisionEnabled(collision);
 }
 
 // Called every frame

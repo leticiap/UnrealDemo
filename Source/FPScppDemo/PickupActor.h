@@ -19,6 +19,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void Show(bool visible);
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -44,7 +46,7 @@ public:
 		UBoxComponent* BoxCollider;
 
 	UPROPERTY(EditAnyWhere)
-		FString Name;
+	FString Name;
 
 	virtual void OnInteract();
 

@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
+#include "Engine.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -107,6 +108,22 @@ void AFPScppDemoCharacter::BeginPlay()
 
 //////////////////////////////////////////////////////////////////////////
 // Input
+
+void AFPScppDemoCharacter::AddToInventory(APickupActor* actor)
+{
+	_inventory.Add(actor);
+}
+
+void AFPScppDemoCharacter::PrintInventory()
+{
+	FString sInventory = "";
+	for (APickupActor* actor : _inventory)
+	{
+		sInventory.Append(actor->Name);
+		sInventory.Append(" | ");
+	}
+	GEngine->AddOnScreenDebugMessage(1, 3, FColor::White, *sInventory);
+}
 
 void AFPScppDemoCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {

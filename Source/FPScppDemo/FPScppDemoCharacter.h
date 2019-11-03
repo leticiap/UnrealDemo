@@ -1,10 +1,10 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
-
+#include "PickupActor.h"
 #pragma once
-
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "FPScppDemoCharacter.generated.h"
+
 
 class UInputComponent;
 
@@ -118,7 +118,15 @@ protected:
 	void EndTouch(const ETouchIndex::Type FingerIndex, const FVector Location);
 	void TouchUpdate(const ETouchIndex::Type FingerIndex, const FVector Location);
 	TouchData	TouchItem;
-	
+
+private:
+	TArray<APickupActor*> _inventory;
+
+public:
+	void AddToInventory(APickupActor* actor);
+	UFUNCTION(BlueprintCallable)
+	void PrintInventory();
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;

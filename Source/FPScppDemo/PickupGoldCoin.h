@@ -13,5 +13,4 @@ UCLASS()
 class FPSCPPDEMO_API APickupGoldCoin : public APickupActor
 {
 	GENERATED_BODY()
-	
 };

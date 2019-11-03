@@ -2,4 +2,8 @@
 
 
 #include "PickupSilverCoin.h"
+void APickupActor::BeginPlay()
+{
 
+	Name = "Silver Coin";
+}
