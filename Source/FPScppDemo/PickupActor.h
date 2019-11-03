@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
+#include "Components/BoxComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PickupActor.generated.h"
@@ -23,7 +23,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	//RotationRate
+	// RotationRate
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Pickup)
 	FRotator RotationRate;
 
@@ -31,7 +31,23 @@ public:
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Pickup)
 	USceneComponent* SceneComponent;
 
-	//MeshComponent
+	// MeshComponent
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Pickup)
+	UStaticMeshComponent* ItemMesh;
+
+	// Speed
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = Pickup)
-		UStaticMeshComponent* ItemMesh;
+		float Speed;
+
+	// Box Collider and overlap function
+	UPROPERTY(EditAnyWhere)
+		UBoxComponent* BoxCollider;
+
+	UPROPERTY(EditAnyWhere)
+		FString Name;
+
+	virtual void OnInteract();
+
+	UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
